@@ -1,0 +1,9 @@
+﻿@model IEnumerable<string>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@foreach(var value in Model)
+{
+    <h1>@value</h1>
+}
