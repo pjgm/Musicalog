@@ -1,23 +1,27 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
+using System.Threading.Tasks;
+using ApplicationCore.Entities;
+using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Models;
-using WebApi.Interfaces;
 
 namespace Musicalog.Controllers
 {
-    public class HomeController : Controller
+	public class HomeController : Controller
     {
-        private IValuesController apiValuesController;
+		private readonly IInventoryController apiInventoryController;
 
-        public HomeController(IValuesController apiValuesController)
+		public HomeController(
+			IInventoryController apiInventoryController
+			)
         {
-            this.apiValuesController = apiValuesController;
+            this.apiInventoryController = apiInventoryController;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            IEnumerable<string> values = apiValuesController.Get().Value;
+            IEnumerable<InventoryEntry> values = await apiInventoryController.Get();
             return View(values);
         }
 

@@ -1,8 +1,8 @@
 ﻿namespace ApplicationCore.Entities
 {
-    public class Inventory
+    public class InventoryEntry
     {
-        public Album Album { get; set; }
+		public Album Album { get; set; }
         public int Stock { get; set; }
     }
 }

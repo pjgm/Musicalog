@@ -1,9 +1,10 @@
-﻿@model IEnumerable<string>
+﻿@using ApplicationCore.Entities;
+@model IEnumerable<InventoryEntry>
 @{
     ViewData["Title"] = "Home Page";
 }
 
-@foreach(var value in Model)
+@foreach (var album in Model)
 {
-    <h1>@value</h1>
+    <h1>@album.Stock</h1>
 }

@@ -1,15 +1,16 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using ApplicationCore.Interfaces;
+using CrossCutting.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using WebApi.Controllers;
-using WebApi.Interfaces;
 
 namespace Musicalog
 {
-    public class Startup
+	public class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -28,11 +29,13 @@ namespace Musicalog
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+			services.AddScoped<IAlbumsController, AlbumsController>();
+			services.AddScoped<IInventoryController, InventoryController>();
 
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddSingleton<IValuesController, ValuesController>();
-        }
+			Injector.RegisterServices(services, Configuration);
+		}
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
