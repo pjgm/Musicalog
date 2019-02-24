@@ -7,6 +7,7 @@ namespace Infrastructure.Mapping
 	{
 		internal RecordLabelMap()
 		{
+			Map(recordLabel => recordLabel.Id).ToColumn("RecordLabelId");
 			Map(recordLabel => recordLabel.Name).ToColumn("RecordLabelName");
 		}
 	}

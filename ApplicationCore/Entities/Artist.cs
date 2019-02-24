@@ -1,7 +1,7 @@
 ﻿namespace ApplicationCore.Entities
 {
-    public class Artist
-    {
+    public class Artist : BaseEntity
+	{
         public string Name { get; set; }
     }
 }

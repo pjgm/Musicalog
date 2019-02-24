@@ -73,7 +73,6 @@ namespace Presentation.Controllers
 			return RedirectToAction("Index", "Home");
         }
 
-        // GET: Albums/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
 			var inventoryEntry = await apiInventoryController.GetByAlbumId(id);
@@ -86,8 +85,47 @@ namespace Presentation.Controllers
             return View(editViewModel);
         }
 
-        // POST: Albums/Edit/5
-        [HttpPost]
+		public async Task<IActionResult> EditEntry(IFormCollection collection)
+		{
+			int.TryParse(collection["inventoryEntryId"].First(), out int inventoryEntryId);
+			int.TryParse(collection["albumId"].First(), out int albumId);
+			int.TryParse(collection["artistId"].First(), out int artistId);
+			int.TryParse(collection["recordLabelId"].First(), out int recordLabelId);
+			int.TryParse(collection["stock"].First(), out int stock);
+			var albumName = collection["albumName"].First();
+			var artistName = collection["artist"].First();
+			var recordLabelName = collection["recordLabel"].First();
+			Enum.TryParse(collection["albumType"].First(), out AlbumType albumType);
+
+			var entry = new InventoryEntry
+			{
+				Id = inventoryEntryId,
+				Album = new Album
+				{
+					Id = albumId,
+					Name = albumName,
+					Type = albumType,
+					Artist = new Artist
+					{
+						Id = artistId,
+						Name = artistName
+					},
+					RecordLabel = new RecordLabel
+					{
+						Id = recordLabelId,
+						Name = recordLabelName
+					}
+				},
+				Stock = stock
+			};
+			await apiInventoryController.EditInventoryEntry(entry);
+			return RedirectToAction("Index", "Home");
+		}
+
+
+
+		// POST: Albums/Edit/5
+		[HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
         {

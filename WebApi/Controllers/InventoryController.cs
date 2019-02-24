@@ -36,6 +36,11 @@ namespace WebApi.Controllers
 			return entry;
 		}
 
+		public async Task EditInventoryEntry(InventoryEntry entry)
+		{
+			await inventoryService.EditInventoryEntryAsync(entry);
+		}
+
 		[HttpPost]
 		public async Task Post(InventoryEntry entry)
 		{

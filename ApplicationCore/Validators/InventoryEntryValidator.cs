@@ -8,6 +8,10 @@ namespace ApplicationCore.Validators
 		public const int MaxStringSize = 255;
 		public static void Validate(InventoryEntry entry)
 		{
+			if (entry.Album == null || entry.Album.Artist == null || entry.Album.RecordLabel == null)
+			{
+				throw new InvalidInputValueException("Input value not defined");
+			}
 			if (entry.Stock < 0)
 			{
 				throw new InvalidInputValueException("Negative input now allowed");

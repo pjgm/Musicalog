@@ -1,8 +1,7 @@
 ﻿namespace ApplicationCore.Entities
 {
-    public class InventoryEntry
-    {
-		public int Id { get; set; }
+    public class InventoryEntry : BaseEntity
+	{
 		public Album Album { get; set; }
         public int Stock { get; set; }
     }

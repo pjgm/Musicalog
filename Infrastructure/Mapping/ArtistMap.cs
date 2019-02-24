@@ -7,6 +7,7 @@ namespace Infrastructure.Mapping
 	{
 		internal ArtistMap()
 		{
+			Map(artist => artist.Id).ToColumn("ArtistId");
 			Map(artist => artist.Name).ToColumn("ArtistName");
 		}
 	}

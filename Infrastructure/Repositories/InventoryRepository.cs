@@ -16,7 +16,7 @@ namespace Infrastructure.Repositories
 		{
 		}
 
-		public async Task CreateEntry(InventoryEntry entry)
+		public async Task CreateEntryAsync(InventoryEntry entry)
 		{
 			using (IDbConnection conn = Connection)
 			{
@@ -45,11 +45,31 @@ namespace Infrastructure.Repositories
 			}
 		}
 
+		public async Task EditEntryAsync(InventoryEntry entry)
+		{
+			using (IDbConnection conn = Connection)
+			{
+				string updateEntrySql = 
+					"UPDATE Inventory SET Stock = @NewStock where Inventory.Id = @InventoryId;" +
+					"UPDATE Albums SET Name = @NewAlbumName, AlbumType = @NewAlbumType where Albums.Id = @AlbumId";
+				await conn.ExecuteAsync(
+					updateEntrySql, 
+					new {
+						NewStock = entry.Stock,
+						InventoryId = entry.Id,
+						AlbumId = entry.Album.Id,
+						NewAlbumName = entry.Album.Name,
+						NewAlbumType = (int)entry.Album.Type
+					});
+
+			}
+		}
+
 		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize)
 		{
 			using (IDbConnection conn = Connection)
 			{
-				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY Inventory.Id " +
+				string sqlQuery = "select ArtistId as 'ArtistId', Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', RecordLabels.Id as 'RecordLabelId', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Albums.Id as 'AlbumId', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY Inventory.Id " +
 					"OFFSET " + pageIndex + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
 
 				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(
@@ -71,7 +91,7 @@ namespace Infrastructure.Repositories
 		{
 			using (IDbConnection conn = Connection)
 			{
-				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id where Albums.Id = " + id;
+				string sqlQuery = "select ArtistId as 'ArtistId', Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', RecordLabels.Id as 'RecordLabelId', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Albums.Id as 'AlbumId', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id where Albums.Id = " + id;
 
 				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(
 					sqlQuery,

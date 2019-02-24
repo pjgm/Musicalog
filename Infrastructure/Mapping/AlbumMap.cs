@@ -7,6 +7,7 @@ namespace Infrastructure.Mapping
 	{
 		internal AlbumMap()
 		{
+			Map(album => album.Id).ToColumn("AlbumId");
 			Map(album => album.Name).ToColumn("AlbumName");
 			Map(album => album.Type).ToColumn("Medium");
 		}

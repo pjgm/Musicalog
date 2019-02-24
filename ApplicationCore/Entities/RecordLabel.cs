@@ -1,7 +1,7 @@
 ﻿namespace ApplicationCore.Entities
 {
-    public class RecordLabel
-    {
+    public class RecordLabel : BaseEntity
+	{
         public string Name { get; set; }
     }
 }

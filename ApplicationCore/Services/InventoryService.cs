@@ -48,7 +48,13 @@ namespace ApplicationCore.Services
 		public async Task CreateEntryAsync(InventoryEntry entry)
 		{
 			InventoryEntryValidator.Validate(entry);
-			await inventoryRepository.CreateEntry(entry);
+			await inventoryRepository.CreateEntryAsync(entry);
+		}
+
+		public async Task EditInventoryEntryAsync(InventoryEntry entry)
+		{
+			InventoryEntryValidator.Validate(entry);
+			await inventoryRepository.EditEntryAsync(entry);
 		}
 	}
 }

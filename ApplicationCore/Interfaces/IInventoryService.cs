@@ -10,5 +10,6 @@ namespace ApplicationCore.Interfaces
 		Task<InventoryEntry> GetEntryByAlbumIdAsync(int id);
 		Task<InventoryEntry> GetEntryByInventoryIdAsync(int id);
 		Task CreateEntryAsync(InventoryEntry entry);
+		Task EditInventoryEntryAsync(InventoryEntry entry);
 	}
 }
