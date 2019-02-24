@@ -12,11 +12,22 @@
         {
             <div class="col-xl-6 col-lg-3 mt-3">
                 <div class="card">
-                    <ul class="text-truncate">
-                        <li><span class="font-weight-bold">Album name:</span> @entry.Album.Name</li>
-                        <li><span class="font-weight-bold">Artist name:</span>  @entry.Album.Artist.Name</li>
-                        <li><span class="font-weight-bold">Available stock:</span> @entry.Stock</li>
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            <a asp-controller="Albums" asp-action="Details" asp-route-id="@entry.Id">
+                                @entry.Album.Name
+                            </a>
+                        </h5>
+                        <h6 class="card-subtitle mb-2 text-muted"> @entry.Album.Artist.Name</h6>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Album type: @entry.Album.Type</li>
+                        <li class="list-group-item">Stock: @entry.Stock</li>
                     </ul>
+                    <div class="card-body">
+                        <a asp-controller="Albums" asp-action="Edit" asp-route-id="@entry.Id" class="btn btn-primary">Edit</a>
+                        <a href="#" class="btn btn-primary">Delete</a>
+                    </div>
                 </div>
             </div>
         }

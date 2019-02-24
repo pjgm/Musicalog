@@ -1,0 +1,38 @@
+﻿@using Presentation.ViewModels;
+@model EditEntryViewModel
+@{
+    ViewData["Title"] = "Details Page";
+}
+
+<form asp-controller="Album" asp-action="Create" method="post">
+    <div class="form-group">
+        <label for="albumName">Album Name</label>
+        <input type="text" class="form-control" id="albumName" name="albumName" placeholder="Enter the album name"
+               value="@Model.Entry.Album.Name">
+    </div>
+    <div class="form-group">
+        <label for="artist">Artist</label>
+        <input type="text" class="form-control" id="artist" name="artist" placeholder="Enter the name of the artist"
+               value="@Model.Entry.Album.Artist.Name">
+    </div>
+    <div class="form-group">
+        <label for="recordLabel">Label</label>
+        <input type="text" class="form-control" id="recordLabel" name="recordLabel" placeholder="Enter the name of the record label"
+               value="@Model.Entry.Album.RecordLabel.Name">
+    </div>
+    <div class="form-group">
+        <label for="stock">Stock</label>
+        <input type="number" class="form-control" id="stock" name="stock" placeholder="Enter the stock available for this album"
+               value="@Model.Entry.Stock">
+    </div>
+    <div class="form-group">
+        <label for="albumType">Album Type</label>
+        <select class="form-control" id="albumType" name="albumType">
+            @foreach (var type in Model.AlbumTypes)
+            {
+                <option selected="@(Model.Entry.Album.Type == type)" >@type.ToString()</option>
+            }
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Edit Entry</button>
+</form>

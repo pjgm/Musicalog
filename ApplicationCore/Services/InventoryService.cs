@@ -33,6 +33,18 @@ namespace ApplicationCore.Services
 			return entry;
 		}
 
+		public async Task<InventoryEntry> GetEntryByInventoryIdAsync(int id)
+		{
+			var entry = await inventoryRepository.GetEntryByInventoryIdAsync(id);
+
+			if (entry == null)
+			{
+				throw new InventoryEntryNotFoundException("Inventory entry not found");
+			}
+
+			return entry;
+		}
+
 		public async Task CreateEntryAsync(InventoryEntry entry)
 		{
 			InventoryEntryValidator.Validate(entry);

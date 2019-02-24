@@ -28,6 +28,7 @@ namespace Infrastructure.Repositories
 				config.AddMap(new AlbumMap());
 				config.AddMap(new ArtistMap());
 				config.AddMap(new RecordLabelMap());
+				config.AddMap(new InventoryEntryMap());
 			});
 		}
 	}

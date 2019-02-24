@@ -49,7 +49,7 @@ namespace Infrastructure.Repositories
 		{
 			using (IDbConnection conn = Connection)
 			{
-				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY Inventory.Id " +
+				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY Inventory.Id " +
 					"OFFSET " + pageIndex + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
 
 				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(
@@ -71,7 +71,28 @@ namespace Infrastructure.Repositories
 		{
 			using (IDbConnection conn = Connection)
 			{
-				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id where Albums.Id = " + id;
+				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id where Albums.Id = " + id;
+
+				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(
+					sqlQuery,
+					map: (artist, recordLabel, album, inventoryEntry) =>
+					{
+						album.Artist = artist;
+						album.RecordLabel = recordLabel;
+						inventoryEntry.Album = album;
+						return inventoryEntry;
+					},
+					splitOn: "RecordLabelName,AlbumName,Stock");
+
+				return result.ToList().FirstOrDefault();
+			}
+		}
+
+		public async Task<InventoryEntry> GetEntryByInventoryIdAsync(int id)
+		{
+			using (IDbConnection conn = Connection)
+			{
+				string sqlQuery = "select Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id where Inventory.Id = " + id;
 
 				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(
 					sqlQuery,

@@ -8,6 +8,7 @@ namespace ApplicationCore.Interfaces
 	{
 		Task<IEnumerable<InventoryEntry>> Get(int pageIndex, int pageSize);
 		Task<InventoryEntry> GetByAlbumId(int id);
+		Task<InventoryEntry> GetByInventoryId(int id);
 		Task Post(InventoryEntry entry);
 	}
 }

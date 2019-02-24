@@ -7,8 +7,7 @@ namespace Infrastructure.Mapping
 	{
 		internal InventoryEntryMap()
 		{
-			//Map(artist => artist.Name).ToColumn("ArtistName");
-			//Map(entry => entry.Album).
+			Map(entry => entry.Id).ToColumn("InventoryId");
 		}
 	}
 }

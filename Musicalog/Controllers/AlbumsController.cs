@@ -5,6 +5,7 @@ using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.ViewModels;
 
 namespace Presentation.Controllers
 {
@@ -30,13 +31,13 @@ namespace Presentation.Controllers
 
         public async Task<IActionResult> Details(int id)
 		{
-			var albumInfo = await apiInventoryController.GetByAlbumId(id);
-			return View(albumInfo);
+			var inventoryEntry = await apiInventoryController.GetByInventoryId(id);
+			return View(inventoryEntry);
 		}
 
 		public IActionResult Create()
         {
-			var albumTypes = Enum.GetValues(typeof(AlbumType)).Cast<AlbumType>(); ;
+			var albumTypes = Enum.GetValues(typeof(AlbumType)).Cast<AlbumType>();
 			return View(albumTypes);
         }
 
@@ -73,9 +74,16 @@ namespace Presentation.Controllers
         }
 
         // GET: Albums/Edit/5
-        public ActionResult Edit(int id)
+        public async Task<IActionResult> Edit(int id)
         {
-            return View();
+			var inventoryEntry = await apiInventoryController.GetByAlbumId(id);
+			var editViewModel = new EditEntryViewModel
+			{
+				Entry = inventoryEntry,
+				AlbumTypes = Enum.GetValues(typeof(AlbumType)).Cast<AlbumType>()
+			};
+
+            return View(editViewModel);
         }
 
         // POST: Albums/Edit/5
