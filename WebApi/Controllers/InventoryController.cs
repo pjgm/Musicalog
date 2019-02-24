@@ -46,5 +46,11 @@ namespace WebApi.Controllers
 		{
 			await inventoryService.CreateEntryAsync(entry);
 		}
+
+		[HttpDelete]
+		public async Task Delete(int id)
+		{
+			await inventoryService.DeleteEntryByInventoryId(id);
+		}
 	}
 }

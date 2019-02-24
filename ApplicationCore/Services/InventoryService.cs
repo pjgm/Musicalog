@@ -56,5 +56,10 @@ namespace ApplicationCore.Services
 			InventoryEntryValidator.Validate(entry);
 			await inventoryRepository.EditEntryAsync(entry);
 		}
+
+		public async Task DeleteEntryByInventoryId(int id)
+		{
+			await inventoryRepository.DeleteEntryByInventoryIdAsync(id);
+		}
 	}
 }
