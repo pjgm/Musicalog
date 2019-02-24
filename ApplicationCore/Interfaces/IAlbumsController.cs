@@ -7,5 +7,6 @@ namespace ApplicationCore.Interfaces
 	public interface IAlbumsController
 	{
 		Task<IEnumerable<Album>> Get();
+		Task<Album> Get(int id);
 	}
 }

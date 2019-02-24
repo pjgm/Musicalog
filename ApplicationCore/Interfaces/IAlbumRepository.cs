@@ -8,5 +8,6 @@ namespace ApplicationCore.Interfaces
 	{
 		Album getAlbumById(int id);
 		Task<IEnumerable<Album>> GetAllAlbumsAsync();
+		Task<Album> GetAlbumAsync(int id);
 	}
 }

@@ -12,10 +12,10 @@ namespace CrossCutting.DependencyInjection
 		{
 			string albumsConnectionString = configuration.GetConnectionString("AlbumsConnection");
 
-			services.AddSingleton<IAlbumService, AlbumService>();
-			services.AddSingleton<IAlbumRepository>(s => new AlbumRepository(albumsConnectionString));
-			services.AddSingleton<IInventoryService, InventoryService>();
-			services.AddSingleton<IInventoryRepository>(s => new InventoryRepository(albumsConnectionString));
+			services.AddScoped<IAlbumService, AlbumService>();
+			services.AddScoped<IAlbumRepository>(s => new AlbumRepository(albumsConnectionString));
+			services.AddScoped<IInventoryService, InventoryService>();
+			services.AddScoped<IInventoryRepository>(s => new InventoryRepository(albumsConnectionString));
 		}
 	}
 }

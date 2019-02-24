@@ -18,12 +18,16 @@ namespace WebApi.Controllers
 			this.inventoryService = inventoryService;
 		}
 
-        // GET: api/Inventory
         [HttpGet]
-        public async Task<IEnumerable<InventoryEntry>> Get()
+        public async Task<IEnumerable<InventoryEntry>> Get(int pageIndex, int pageSize)
         {
-			var inventoryList = await inventoryService.GetAllStock();
-			return inventoryList;
+			return await inventoryService.GetEntriesAsync(pageIndex, pageSize);
 		}
-    }
+
+		public async Task<InventoryEntry> GetByAlbumId(int id)
+		{
+			var test = await inventoryService.GetEntryByAlbumIdAsync(id);
+			return test;
+		}
+	}
 }

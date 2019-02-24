@@ -6,6 +6,7 @@ namespace ApplicationCore.Interfaces
 {
 	public interface IInventoryService
 	{
-		Task<IEnumerable<InventoryEntry>> GetAllStock();
+		Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize);
+		Task<InventoryEntry> GetEntryByAlbumIdAsync(int id);
 	}
 }

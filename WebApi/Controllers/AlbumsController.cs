@@ -10,64 +10,6 @@ namespace WebApi.Controllers
     [ApiController]
     public class AlbumsController : ControllerBase, IAlbumsController
     {
-        private static IEnumerable<Album> albumList = new List<Album>
-        {
-            new Album
-            {
-                Name = "Boom boom",
-                Artist = new Artist
-                {
-                    Name = "Paulo Martins"
-                },
-                RecordLabel = new RecordLabel
-                {
-                   Name = "Grandes Sons Lda" 
-                },
-                Type = 1
-            },
-
-            new Album
-            {
-                Name = "Opus Eponymous",
-                Artist = new Artist
-                {
-                    Name = "Ghost"
-                },
-                RecordLabel = new RecordLabel
-                {
-                   Name = "Grandes Sons Lda"
-                },
-                Type = 3
-            },
-
-            new Album
-            {
-                Name = "Infestissumam",
-                Artist = new Artist
-                {
-                    Name = "Ghost"
-                },
-                RecordLabel = new RecordLabel
-                {
-                   Name = "Rise Above"
-                },
-                Type = 1
-            },
-            new Album
-            {
-                Name = "Meliora",
-                Artist = new Artist
-                {
-                    Name = "Ghost"
-                },
-                RecordLabel = new RecordLabel
-                {
-                   Name = "Rise Above"
-                },
-                Type = 3
-            }
-        };
-
 		private readonly IAlbumService albumsService;
 
 		public AlbumsController(IAlbumService albumsService)
@@ -75,7 +17,6 @@ namespace WebApi.Controllers
 			this.albumsService = albumsService;
 		}
 
-        // GET: api/Albums
         [HttpGet]
         public async Task<IEnumerable<Album>> Get()
         {
@@ -83,12 +24,12 @@ namespace WebApi.Controllers
 			return albumList;
         }
 
-        // GET: api/Albums/5
         [HttpGet("{id}", Name = "Get")]
-        public string Get(int id)
+        public async Task<Album> Get(int id)
         {
-            return "value";
-        }
+			var albumInfo = await albumsService.GetAlbum(id);
+			return albumInfo;
+		}
 
         // POST: api/Albums
         [HttpPost]

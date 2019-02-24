@@ -6,6 +6,7 @@ namespace ApplicationCore.Interfaces
 {
 	public interface IInventoryController
 	{
-		Task<IEnumerable<InventoryEntry>> Get();
+		Task<IEnumerable<InventoryEntry>> Get(int pageIndex, int pageSize);
+		Task<InventoryEntry> GetByAlbumId(int id);
 	}
 }

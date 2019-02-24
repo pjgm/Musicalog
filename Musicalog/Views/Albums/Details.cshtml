@@ -1,0 +1,15 @@
+﻿@using ApplicationCore.Entities;
+@model InventoryEntry
+@{
+    ViewData["Title"] = "Details Page";
+}
+
+<div class="ard">
+    <ul class="text-truncate">
+        <li><span class="font-weight-bold">Album name:</span> @Model.Album.Name</li>
+        <li><span class="font-weight-bold">Artist name:</span>  @Model.Album.Artist.Name</li>
+        <li><span class="font-weight-bold">Label:</span> @Model.Album.RecordLabel.Name</li>
+        <li><span class="font-weight-bold">Available stock:</span> @Model.Album.Type</li>
+        <li><span class="font-weight-bold">Available stock:</span> @Model.Stock</li>
+    </ul>
+</div>

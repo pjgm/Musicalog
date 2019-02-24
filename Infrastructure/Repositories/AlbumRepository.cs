@@ -13,9 +13,17 @@ namespace Infrastructure.Repositories
 		{
 		}
 
-		public Album getAlbumById(int id)
+		public async Task<Album> GetAlbumAsync(int id)
 		{
-			throw new System.NotImplementedException();
+			using (IDbConnection conn = Connection)
+			{
+				string sQuery = "SELECT * FROM Albums where Albums.Id = " + id;
+
+				conn.Open();
+
+				var result = await conn.QueryFirstAsync<Album>(sQuery);
+				return result;
+			}
 		}
 
 		public async Task<IEnumerable<Album>> GetAllAlbumsAsync()
@@ -31,6 +39,10 @@ namespace Infrastructure.Repositories
 			}
 		}
 
+		public Album getAlbumById(int id)
+		{
+			throw new System.NotImplementedException();
+		}
 
 	}
 }

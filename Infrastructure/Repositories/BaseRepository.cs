@@ -7,7 +7,6 @@ namespace Infrastructure.Repositories
 {
 	public class BaseRepository
 	{
-
 		private readonly string connectionString;
 		public IDbConnection Connection
 		{
@@ -20,6 +19,9 @@ namespace Infrastructure.Repositories
 		public BaseRepository(string connectionString)
 		{
 			this.connectionString = connectionString;
+
+			FluentMapper.EntityMaps.Clear();
+			FluentMapper.TypeConventions.Clear();
 
 			FluentMapper.Initialize(config =>
 			{

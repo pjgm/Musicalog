@@ -19,5 +19,12 @@ namespace ApplicationCore.Services
 			var albumList = await albumRepository.GetAllAlbumsAsync();
 			return albumList;
 		}
+
+		public async Task<Album> GetAlbum(int id)
+		{
+			var albumInfo = await albumRepository.GetAlbumAsync(id);
+			return albumInfo;
+		}
+
 	}
 }
