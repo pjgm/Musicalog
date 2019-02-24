@@ -26,8 +26,8 @@ namespace WebApi.Controllers
 
 		public async Task<InventoryEntry> GetByAlbumId(int id)
 		{
-			var test = await inventoryService.GetEntryByAlbumIdAsync(id);
-			return test;
+			var entry = await inventoryService.GetEntryByAlbumIdAsync(id);
+			return entry;
 		}
 
 		[HttpPost]
