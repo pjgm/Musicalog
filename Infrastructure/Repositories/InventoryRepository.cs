@@ -68,9 +68,9 @@ namespace Infrastructure.Repositories
 			}
 		}
 
-		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize)
+		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize, string sortBy, string orderBy)
 		{
-			var sqlQuery = "select ArtistId as 'ArtistId', Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', RecordLabels.Id as 'RecordLabelId', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Albums.Id as 'AlbumId', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY Inventory.Id OFFSET " + pageIndex + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
+			var sqlQuery = "select ArtistId as 'ArtistId', Artists.Name as 'ArtistName', RecordLabels.Name as 'RecordLabelName', RecordLabels.Id as 'RecordLabelId', Albums.Name as 'AlbumName', Albums.AlbumType as 'Medium', Albums.Id as 'AlbumId', Inventory.Stock as 'Stock', Inventory.Id as 'InventoryId' from Inventory inner join Albums on Inventory.AlbumId = Albums.Id inner join Artists on Albums.ArtistId = Artists.Id inner join RecordLabels on Albums.RecordLabelId = RecordLabels.Id ORDER BY " + sortBy + " " +  orderBy + " OFFSET " + pageIndex + " ROWS FETCH NEXT " + pageSize + " ROWS ONLY";
 			using (IDbConnection conn = Connection)
 			{
 				var result = await conn.QueryAsync<Artist, RecordLabel, Album, InventoryEntry, InventoryEntry>(

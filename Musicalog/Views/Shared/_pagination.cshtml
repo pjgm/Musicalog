@@ -1,16 +1,41 @@
 ﻿@using Presentation.ViewModels;
 @model PaginationViewModel
 
-<div class="d-flex flex-row justify-content-between">
+<div class="d-flex flex-column justify-content-between">
+    <form asp-controller="Home" asp-action="GetPaginatedResults" method="post">
+        <div class="d-flex flex-row justify-content-between">
+            <div class="d-flex flex-row">
+                <input type="hidden" id="currentPage" name="currentPage" value="@Model.CurrentPage" />
+                <div class="form-group form-inline">
+                    <select class="form-control" id="pageSize" name="pageSize">
+                        <option value="10" selected disabled>Results</option>
+                        <option value="5">5</option>
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                    </select>
+                </div>
 
-    <div class="form-group form-inline">
-        <select class="form-control" id="pageSize" name="pageSize">
-            <option value="" selected disabled>Results</option>
-            <option>5</option>
-            <option>10</option>
-            <option>20</option>
-        </select>
-    </div>
+                <div class="form-group form-inline">
+                    <select class="form-control" id="sortBy" name="sortBy">
+                        <option value="Inventory.Id" selected disabled>Sort By</option>
+                        <option value="Albums.Name">Album Name</option>
+                        <option value="Artists.Name">Artist Name</option>
+                        <option value="RecordLabels.Name">Record Label</option>
+                    </select>
+                </div>
+                <div class="form-group form-inline">
+                    <select class="form-control" id="orderBy" name="orderBy">
+                        <option value="ASC" selected disabled>Order By</option>
+                        <option value="ASC">Ascending</option>
+                        <option value="DESC">Descending</option>
+                    </select>
+                </div>
+            </div>
+            <div>
+                <button type="submit" class="btn btn-info">Submit</button>
+            </div>
+        </div>
+    </form>
 
     <nav aria-label="Album navigation">
         <ul class="pagination justify-content-center">
@@ -35,13 +60,4 @@
             </li>
         </ul>
     </nav>
-
-    <div class="form-group form-inline">
-        <select class="form-control" id="sortBy" name="sortBy">
-            <option value="" selected disabled>Sort By</option>
-            <option>Album Name</option>
-            <option>Artist Name</option>
-            <option>Record Label</option>
-        </select>
-    </div>
 </div>

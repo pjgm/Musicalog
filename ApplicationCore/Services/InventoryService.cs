@@ -16,9 +16,9 @@ namespace ApplicationCore.Services
 			this.inventoryRepository = inventoryRepository;
 		}
 
-		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize)
+		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize, string sortBy, string orderBy)
 		{
-			return await inventoryRepository.GetEntriesAsync(pageIndex, pageSize);
+			return await inventoryRepository.GetEntriesAsync(pageIndex, pageSize, sortBy, orderBy);
 		}
 
 		public async Task<InventoryEntry> GetEntryByAlbumIdAsync(int id)

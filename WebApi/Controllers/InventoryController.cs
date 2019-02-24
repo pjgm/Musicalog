@@ -19,9 +19,9 @@ namespace WebApi.Controllers
 		}
 
         [HttpGet]
-        public async Task<IEnumerable<InventoryEntry>> Get(int pageIndex, int pageSize)
+        public async Task<IEnumerable<InventoryEntry>> Get(int pageIndex, int pageSize, string sortBy, string orderBy)
         {
-			return await inventoryService.GetEntriesAsync(pageIndex, pageSize);
+			return await inventoryService.GetEntriesAsync(pageIndex, pageSize, sortBy, orderBy);
 		}
 
 		public async Task<InventoryEntry> GetByAlbumId(int id)

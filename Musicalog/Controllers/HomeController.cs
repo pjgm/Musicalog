@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using ApplicationCore.Interfaces;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Musicalog.Models;
 using Presentation.ViewModels;
@@ -17,9 +18,9 @@ namespace Musicalog.Controllers
 			this.apiInventoryController = apiInventoryController;
 		}
 
-		public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 10)
+		public async Task<IActionResult> Index(int pageIndex = 0, int pageSize = 10, string sortBy = "Inventory.Id", string orderBy = "ASC")
 		{
-			var entries = await apiInventoryController.Get(pageIndex, pageSize);
+			var entries = await apiInventoryController.Get(pageIndex, pageSize, sortBy, orderBy);
 			var viewModel = new InventoryViewModel
 			{
 				InventoryEntries = entries,
@@ -31,6 +32,16 @@ namespace Musicalog.Controllers
 				}
 			};
 			return View(viewModel);
+		}
+
+		public IActionResult GetPaginatedResults(IFormCollection collection)
+		{
+			int.TryParse(collection["currentPage"].First(), out int currentPage);
+			int.TryParse(collection["pageSize"].First(), out int pageSize);
+			var sortBy = collection["sortBy"].First();
+			var orderBy = collection["orderBy"].First();
+
+			return RedirectToAction("Index", new { pageIndex = currentPage, pageSize, sortBy, orderBy });
 		}
 
 		[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
