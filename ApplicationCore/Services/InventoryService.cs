@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using ApplicationCore.Entities;
 using ApplicationCore.Exceptions;
 using ApplicationCore.Interfaces;
+using ApplicationCore.Validators;
 
 namespace ApplicationCore.Services
 {
@@ -14,6 +15,7 @@ namespace ApplicationCore.Services
 		{
 			this.inventoryRepository = inventoryRepository;
 		}
+
 		public async Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize)
 		{
 			return await inventoryRepository.GetEntriesAsync(pageIndex, pageSize);
@@ -29,6 +31,12 @@ namespace ApplicationCore.Services
 			}
 
 			return entry;
+		}
+
+		public async Task CreateEntryAsync(InventoryEntry entry)
+		{
+			InventoryEntryValidator.Validate(entry);
+			await inventoryRepository.CreateEntry(entry);
 		}
 	}
 }

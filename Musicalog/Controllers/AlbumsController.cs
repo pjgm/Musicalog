@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using ApplicationCore.Entities;
 using ApplicationCore.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -31,27 +34,42 @@ namespace Presentation.Controllers
 			return View(albumInfo);
 		}
 
-		// GET: Albums/Create
-		public ActionResult Create()
+		public IActionResult Create()
         {
-            return View();
+			var albumTypes = Enum.GetValues(typeof(AlbumType)).Cast<AlbumType>(); ;
+			return View(albumTypes);
         }
 
-        // POST: Albums/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(IFormCollection collection)
         {
-            try
-            {
-                // TODO: Add insert logic here
+			var albumName = collection["albumName"].First();
+			var artistName = collection["artist"].First();
+			var recordLabelName = collection["recordLabel"].First();
+			int.TryParse(collection["stock"].First(), out int stock);
+			Enum.TryParse(collection["albumType"].First(), out AlbumType albumType);
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+			var inventoryEntry = new InventoryEntry()
+			{
+				Album = new Album
+				{
+					Artist = new Artist
+					{
+						Name = artistName
+					},
+					Name = albumName,
+					RecordLabel = new RecordLabel
+					{
+						Name = recordLabelName
+					},
+					Type = albumType
+				},
+				Stock = stock
+			};
+
+			await apiInventoryController.Post(inventoryEntry);
+
+			return RedirectToAction("Index", "Home");
         }
 
         // GET: Albums/Edit/5

@@ -8,5 +8,6 @@ namespace ApplicationCore.Interfaces
 	{
 		Task<IEnumerable<InventoryEntry>> GetEntriesAsync(int pageIndex, int pageSize);
 		Task<InventoryEntry> GetEntryByAlbumIdAsync(int id);
+		Task CreateEntryAsync(InventoryEntry entry);
 	}
 }

@@ -29,5 +29,11 @@ namespace WebApi.Controllers
 			var test = await inventoryService.GetEntryByAlbumIdAsync(id);
 			return test;
 		}
+
+		[HttpPost]
+		public async Task Post(InventoryEntry entry)
+		{
+			await inventoryService.CreateEntryAsync(entry);
+		}
 	}
 }

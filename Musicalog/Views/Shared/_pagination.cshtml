@@ -4,10 +4,23 @@
 <nav aria-label="Album navigation">
     <ul class="pagination justify-content-center">
         <li class="page-item @(Model.CurrentPage == 0 ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("Index", "Home", new { pageIndex = Model.CurrentPage - Model.PageSize, pageSize = Model.PageSize })" tabindex="-1">Previous</a>
+            <a class="page-link"
+               tabindex="-1"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageindex="@(Model.CurrentPage - Model.PageSize)"
+               asp-route-pagesize="@Model.PageSize">
+                Previous
+            </a>
         </li>
         <li class="page-item @(Model.IsLastPage ? "disabled" : "")">
-            <a class="page-link" href="@Url.Action("Index", "Home", new { pageIndex = Model.CurrentPage + Model.PageSize, pageSize = Model.PageSize })">Next</a>
+            <a class="page-link"
+               asp-controller="Home"
+               asp-action="Index"
+               asp-route-pageindex="@(Model.CurrentPage + Model.PageSize)"
+               asp-route-pagesize="@Model.PageSize">
+            Next
+            </a>
         </li>
     </ul>
 </nav>
