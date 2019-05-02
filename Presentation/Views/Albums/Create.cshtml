@@ -20,11 +20,15 @@
     <div class="form-group">
         <label for="albumType">Album Type</label>
         <select class="form-control" id="albumType" name="albumType">
-            @foreach (var type in Model)    
+            @foreach (var type in Model)
             {
                 <option>@type.ToString()</option>
             }
         </select>
+        @*@foreach (var type in Model)
+        {
+            <input type="submit" class="form-control" name="albumType" value="@type.ToString()" />
+        }*@
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
 </form>
